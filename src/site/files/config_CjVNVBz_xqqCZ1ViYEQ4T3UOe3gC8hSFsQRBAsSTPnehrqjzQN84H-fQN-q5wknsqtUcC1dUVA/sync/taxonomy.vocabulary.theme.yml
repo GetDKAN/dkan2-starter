@@ -1,0 +1,11 @@
+uuid: 83945670-af20-4159-9d39-0f716bedaa34
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: fBPwpXRu7hdHPm-ezxeaOmh_9kK3wguv95jvl_oRhU0
+name: Theme
+vid: theme
+description: ''
+hierarchy: 0
+weight: 0

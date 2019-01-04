@@ -1,0 +1,27 @@
+uuid: 0e747236-07f3-4d0b-b096-ad29c8978ab5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.dataset.field_json_metadata
+    - node.type.dataset
+  module:
+    - user
+_core:
+  default_config_hash: 3zpzhn8dJ6hi5r13W6k1kLT3iNzBFmAN7GFxkx0-fdU
+id: node.dataset.default
+targetEntityType: node
+bundle: dataset
+mode: default
+content:
+  field_json_metadata:
+    weight: 101
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden: {  }

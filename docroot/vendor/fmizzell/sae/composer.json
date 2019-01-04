@@ -1,0 +1,23 @@
+{
+    "name": "fmizzell/sae",
+    "description": "Services API Engine",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Sae\\": "src/"
+        }
+    },
+    "require": {
+        "justinrainbow/json-schema": "^5.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    },
+    "license": "GPL-3",
+    "authors": [
+        {
+            "name": "fmizzell",
+            "email": "fmizzell@1312210.no-reply.drupal.org"
+        }
+    ]
+}

@@ -1,0 +1,9 @@
+name: 'Drush Site-Install'
+page:
+  front: /node
+_core:
+  default_config_hash: So5AvrCj2Q38JbhPVmX9ST-9-129ICxPQ1hObx6Ds1g
+uuid: 8b6f7a52-ca2a-4e9a-8930-125c0aa0adac
+langcode: en
+default_langcode: en
+mail: admin@example.com

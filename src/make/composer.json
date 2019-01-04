@@ -1,0 +1,21 @@
+{
+    "description": "Project",
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/getdkan/dkan2"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/fmizzell/sae"
+        },
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "require": {
+        "getdkan/dkan2": "dev-development#5653589ee6c7471c48b1d1a9c9e18f57183b5dae"
+    }
+}
