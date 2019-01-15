@@ -6,4 +6,5 @@ This is a prebuilt version of "[DKAN for Drupal 8](https://github.com/GetDKAN/dk
 
 1) Follow the steps under _REQUIREMENTS_ in "[DKAN for Drupal 8](https://github.com/GetDKAN/dkan2/tree/development)"
 1) Restore the DB snapshot: ``dktl restore:db``
+1) Clear caches: ``dktl drush cr``
 1) Access the site: ``dktl drush uli --uri=dkan.local``
