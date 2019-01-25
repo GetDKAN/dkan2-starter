@@ -1,13 +1,13 @@
 {
-  "main.css": "/data-catalog-frontend/build/static/css/main.bf400bf9.chunk.css",
-  "main.js": "/data-catalog-frontend/build/static/js/main.44edb13b.chunk.js",
-  "main.js.map": "/data-catalog-frontend/build/static/js/main.44edb13b.chunk.js.map",
-  "static/js/1.19af2e96.chunk.js": "/data-catalog-frontend/build/static/js/1.19af2e96.chunk.js",
-  "static/js/1.19af2e96.chunk.js.map": "/data-catalog-frontend/build/static/js/1.19af2e96.chunk.js.map",
+  "main.css": "/data-catalog-frontend/build/static/css/main.41ecc2ad.chunk.css",
+  "main.js": "/data-catalog-frontend/build/static/js/main.1110f61e.chunk.js",
+  "main.js.map": "/data-catalog-frontend/build/static/js/main.1110f61e.chunk.js.map",
+  "static/js/1.c9b7d357.chunk.js": "/data-catalog-frontend/build/static/js/1.c9b7d357.chunk.js",
+  "static/js/1.c9b7d357.chunk.js.map": "/data-catalog-frontend/build/static/js/1.c9b7d357.chunk.js.map",
   "runtime~main.js": "/data-catalog-frontend/build/static/js/runtime~main.5d37324b.js",
   "runtime~main.js.map": "/data-catalog-frontend/build/static/js/runtime~main.5d37324b.js.map",
-  "static/css/main.bf400bf9.chunk.css.map": "/data-catalog-frontend/build/static/css/main.bf400bf9.chunk.css.map",
+  "static/css/main.41ecc2ad.chunk.css.map": "/data-catalog-frontend/build/static/css/main.41ecc2ad.chunk.css.map",
   "index.html": "/data-catalog-frontend/build/index.html",
-  "precache-manifest.e4ea3704ba9f516e6c5193745e2d83a2.js": "/data-catalog-frontend/build/precache-manifest.e4ea3704ba9f516e6c5193745e2d83a2.js",
+  "precache-manifest.3b34de0a2c0ada619cb1cff6029b9fe0.js": "/data-catalog-frontend/build/precache-manifest.3b34de0a2c0ada619cb1cff6029b9fe0.js",
   "service-worker.js": "/data-catalog-frontend/build/service-worker.js"
 }
