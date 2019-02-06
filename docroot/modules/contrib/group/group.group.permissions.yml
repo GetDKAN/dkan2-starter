@@ -1,3 +1,4 @@
+# @todo Remove god-mode permission in 8.2.0 release, use 'is_admin' flag on role instead.
 administer group:
   title: 'Administer group'
   description: 'Administer the group, its content and members'

@@ -71,7 +71,7 @@ services:
       - { name: 'cache.context'}
   cache_context.user.group_permissions:
     class: 'Drupal\group\Cache\Context\GroupPermissionsCacheContext'
-    arguments: ['@current_user', '@entity_type.manager', '@group.permissions_hash_generator', '@group.membership_loader']
+    arguments: ['@current_user', '@group.permissions_hash_generator', '@group_permission.calculator']
     tags:
       - { name: 'cache.context'}
   cache_context.user.is_group_member:
@@ -99,12 +99,20 @@ services:
   group.membership_loader:
     class: 'Drupal\group\GroupMembershipLoader'
     arguments: ['@entity_type.manager', '@current_user']
+  # @todo Rename to group_permission.builder in 8.2.0.
   group.permissions:
     class: 'Drupal\group\Access\GroupPermissionHandler'
     arguments: ['@module_handler', '@string_translation', '@controller_resolver', '@plugin.manager.group_content_enabler']
+  # @todo Rename to group_permission.hash_generator in 8.2.0.
   group.permissions_hash_generator:
     class: 'Drupal\group\Access\GroupPermissionsHashGenerator'
-    arguments: ['@private_key', '@cache.default', '@cache.static', '@entity_type.manager', '@group_role.synchronizer', '@group.membership_loader']
+    arguments: ['@private_key', '@cache.static', '@group_permission.calculator']
+  group_permission.calculator:
+    class: 'Drupal\group\Access\GroupPermissionCalculator'
+    arguments: ['@cache.default', '@cache.static', '@entity_type.manager', '@group_role.synchronizer', '@group.membership_loader']
+  group_permission.checker:
+    class: 'Drupal\group\Access\GroupPermissionChecker'
+    arguments: ['@group_permission.calculator']
   group.uninstall_validator.group_content:
     class: 'Drupal\group\UninstallValidator\GroupContentUninstallValidator'
     tags:
