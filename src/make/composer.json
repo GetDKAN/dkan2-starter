@@ -11,11 +11,15 @@
             "url": "https://github.com/fmizzell/sae"
         },
         {
+            "type": "vcs",
+            "url": "https://github.com/fmizzell/datastore"
+        },
+        {
             "type": "composer",
             "url": "https://asset-packagist.org"
         }
     ],
     "require": {
-        "getdkan/dkan2": "dev-development#22b1b0320af23ff690b68bc6acc719980317509e"
+        "getdkan/dkan2": "dev-datastore"
     }
 }

@@ -140,6 +140,7 @@ class ComposerStaticInitDrupal8
             'Doctrine\\Common\\Inflector\\' => 26,
             'Doctrine\\Common\\Cache\\' => 22,
             'Doctrine\\Common\\' => 16,
+            'Dkan\\Datastore\\' => 15,
             'DeepCopy\\' => 9,
         ),
         'C' => 
@@ -464,6 +465,10 @@ class ComposerStaticInitDrupal8
         'Doctrine\\Common\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/common/lib/Doctrine/Common',
+        ),
+        'Dkan\\Datastore\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fmizzell/datastore/src',
         ),
         'DeepCopy\\' => 
         array (
