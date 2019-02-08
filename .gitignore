@@ -3,3 +3,7 @@ data-catalog-components
 src/site/files/css
 src/site/files/js
 src/site/files/php
+docroot/sites/simpletest
+node_modules
+package-lock.json
+docroot/profiles/contrib/dkan2/cypress/videos/*
