@@ -1,15 +1,15 @@
 {
-  "main.js": "/data-catalog-frontend/build/static/js/main.0defb4b0.chunk.js",
-  "main.js.map": "/data-catalog-frontend/build/static/js/main.0defb4b0.chunk.js.map",
+  "main.js": "/data-catalog-frontend/build/static/js/main.8309785d.chunk.js",
+  "main.js.map": "/data-catalog-frontend/build/static/js/main.8309785d.chunk.js.map",
   "runtime~main.js": "/data-catalog-frontend/build/static/js/runtime~main.48b1eb19.js",
   "runtime~main.js.map": "/data-catalog-frontend/build/static/js/runtime~main.48b1eb19.js.map",
-  "static/css/2.96f64527.chunk.css": "/data-catalog-frontend/build/static/css/2.96f64527.chunk.css",
-  "static/js/2.9c15433c.chunk.js": "/data-catalog-frontend/build/static/js/2.9c15433c.chunk.js",
-  "static/js/2.9c15433c.chunk.js.map": "/data-catalog-frontend/build/static/js/2.9c15433c.chunk.js.map",
+  "static/css/2.9feceb0a.chunk.css": "/data-catalog-frontend/build/static/css/2.9feceb0a.chunk.css",
+  "static/js/2.a4d541bf.chunk.js": "/data-catalog-frontend/build/static/js/2.a4d541bf.chunk.js",
+  "static/js/2.a4d541bf.chunk.js.map": "/data-catalog-frontend/build/static/js/2.a4d541bf.chunk.js.map",
   "index.html": "/data-catalog-frontend/build/index.html",
-  "precache-manifest.11dec2f2c0bc387364789db8691b7074.js": "/data-catalog-frontend/build/precache-manifest.11dec2f2c0bc387364789db8691b7074.js",
+  "precache-manifest.8e6ed83026550dfe5c37598d311f5599.js": "/data-catalog-frontend/build/precache-manifest.8e6ed83026550dfe5c37598d311f5599.js",
   "service-worker.js": "/data-catalog-frontend/build/service-worker.js",
-  "static/css/2.96f64527.chunk.css.map": "/data-catalog-frontend/build/static/css/2.96f64527.chunk.css.map",
-  "static/media/logo.svg": "/data-catalog-frontend/build/static/media/logo.d3a0652b.svg",
+  "static/css/2.9feceb0a.chunk.css.map": "/data-catalog-frontend/build/static/css/2.9feceb0a.chunk.css.map",
+  "static/media/logo.svg": "/data-catalog-frontend/build/static/media/logo.69b25270.svg",
   "static/media/waves.jpg": "/data-catalog-frontend/build/static/media/waves.d75640b8.jpg"
 }
