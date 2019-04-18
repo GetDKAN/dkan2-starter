@@ -1,0 +1,6 @@
+name: 'JSON Form'
+description: 'JSON Form'
+type: module
+core: 8.x
+dependencies:
+  drupal:field

@@ -237,6 +237,38 @@ class LayoutBuilderTest extends BrowserTestBase {
   }
 
   /**
+   * Test that layout builder checks entity view access.
+   */
+  public function testAccess() {
+    $assert_session = $this->assertSession();
+
+    $this->drupalLogin($this->drupalCreateUser([
+      'configure any layout',
+      'administer node display',
+    ]));
+
+    $field_ui_prefix = 'admin/structure/types/manage/bundle_with_section_field';
+    // Allow overrides for the layout.
+    $this->drupalPostForm("$field_ui_prefix/display/default", ['layout[enabled]' => TRUE], 'Save');
+    $this->drupalPostForm("$field_ui_prefix/display/default", ['layout[allow_custom]' => TRUE], 'Save');
+
+    $this->drupalLogin($this->drupalCreateUser(['configure any layout']));
+    $this->drupalGet('node/1');
+    $assert_session->pageTextContains('The first node body');
+    $assert_session->pageTextNotContains('Powered by Drupal');
+    $node = Node::load(1);
+    $node->setUnpublished();
+    $node->save();
+    $this->drupalGet('node/1');
+    $assert_session->pageTextNotContains('The first node body');
+    $assert_session->pageTextContains('Access denied');
+
+    $this->drupalGet('node/1/layout');
+    $assert_session->pageTextNotContains('The first node body');
+    $assert_session->pageTextContains('Access denied');
+  }
+
+  /**
    * Tests that a non-default view mode works as expected.
    */
   public function testNonDefaultViewMode() {
@@ -315,6 +347,11 @@ class LayoutBuilderTest extends BrowserTestBase {
     $this->drupalGet('admin/structure/menu/add');
     $page->fillField('label', 'My Menu');
     $page->fillField('id', 'myothermenu');
+    $page->pressButton('Save');
+
+    $page->clickLink('Add link');
+    $page->fillField('title[0][value]', 'My link');
+    $page->fillField('link[0][uri]', '/');
     $page->pressButton('Save');
 
     $this->drupalPostForm('admin/structure/types/manage/bundle_with_section_field/display', ['layout[enabled]' => TRUE], 'Save');
@@ -478,6 +515,23 @@ class LayoutBuilderTest extends BrowserTestBase {
   }
 
   /**
+   * Tests that extra fields work before and after enabling Layout Builder.
+   */
+  public function testExtraFields() {
+    $assert_session = $this->assertSession();
+
+    $this->drupalLogin($this->drupalCreateUser(['administer node display']));
+
+    $this->drupalGet('node');
+    $assert_session->linkExists('Read more');
+
+    $this->drupalPostForm('admin/structure/types/manage/bundle_with_section_field/display/default', ['layout[enabled]' => TRUE], 'Save');
+
+    $this->drupalGet('node');
+    $assert_session->linkExists('Read more');
+  }
+
+  /**
    * Tests that deleting a View block used in Layout Builder works.
    */
   public function testDeletedView() {
@@ -512,6 +566,26 @@ class LayoutBuilderTest extends BrowserTestBase {
     // Node can be loaded after deleting the View.
     $assert_session->pageTextContains(Node::load(1)->getTitle());
     $assert_session->pageTextNotContains('Test Block View');
+  }
+
+  /**
+   * Tests that sections can provide custom attributes.
+   */
+  public function testCustomSectionAttributes() {
+    $assert_session = $this->assertSession();
+    $page = $this->getSession()->getPage();
+
+    $this->drupalLogin($this->drupalCreateUser([
+      'configure any layout',
+      'administer node display',
+    ]));
+
+    $this->drupalPostForm('admin/structure/types/manage/bundle_with_section_field/display/default', ['layout[enabled]' => TRUE], 'Save');
+    $page->clickLink('Manage layout');
+    $page->clickLink('Add Section');
+    $page->clickLink('Layout Builder Test Plugin');
+    // See \Drupal\layout_builder_test\Plugin\Layout\LayoutBuilderTestPlugin::build().
+    $assert_session->elementExists('css', '.go-birds');
   }
 
   /**

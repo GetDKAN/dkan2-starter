@@ -5,19 +5,29 @@
   "homepage": "/data-catalog-frontend/build",
   "dependencies": {
     "axios": "^0.18.0",
-    "interra-data-catalog-components": "0.0.7",
+    "bootstrap": "^4.2.1",
+    "elasticlunr": "^0.9.5",
+    "interra-data-catalog-components": "0.0.30",
+    "lodash": "^4.17.11",
     "node-sass": "^4.11.0",
+    "papaparse": "^4.6.3",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-loader": "^2.4.5",
+    "react-loader-advanced": "^1.7.1",
+    "react-loading-spin": "^1.0.9",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.2",
+    "react-scripts": "2.1.5",
+    "react-table": "^6.9.2",
     "styled-components": "^4.1.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -27,5 +37,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "gh-pages": "^2.0.1"
+  }
 }

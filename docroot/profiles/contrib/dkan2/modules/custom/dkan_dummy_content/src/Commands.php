@@ -2,42 +2,72 @@
 
 namespace Drupal\dkan_dummy_content;
 
+use Harvest\Harvester;
+
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Helper\Table;
+
+use Drupal\dkan_harvest\Log\Stdout;
+use Drupal\dkan_harvest\Reverter;
+use Drupal\dkan_harvest\Storage\File;
+
 use Drush\Commands\DrushCommands;
-use GuzzleHttp\Client;
+
 
 class Commands extends DrushCommands {
 
   /**
-   * Import dummy content from a file to the site.
+   * Create dummy content.
    *
-   * @command dkan-dummy-content:import
+   * @command dkan-dummy-content:create
    *
-   * @usage dkan-dummy-content:import
-   *   Import dummy content from a file to the site.
    */
-  public function import() {
-    $path_public_files = \Drupal::service('file_system')
-      ->realpath(file_default_scheme() . "://");
+  public function create() {
 
-    $dummy_content_file = "$path_public_files/dkan_dummy_content.json";
+    $harvest_plan_file_path = drupal_get_path("module", "dkan_dummy_content") . "/harvest_plan.json";
+    $harvest_plan_json = file_get_contents($harvest_plan_file_path);
+    $harvest_plan = json_decode($harvest_plan_json);
 
-    if (file_exists($dummy_content_file)) {
-      $content = file_get_contents($dummy_content_file);
-      $phpized = json_decode($content);
-      $client = new Client();
+    $sourceId = "dummy";
+    $path = \Drupal::service('file_system')->realpath(file_default_scheme() . "://");
+    $item_folder = "{$path}/dkan_harvest/{$sourceId}";
+    $hash_folder = "{$path}/dkan_harvest/{$sourceId}-hash";
+    $run_folder = "{$path}/dkan_harvest/{$sourceId}-run";
 
-      $url = "http://web/api/v1/dataset";
+    $item_storage = new File($item_folder);
+    $hash_storage = new File($hash_folder);
+    $run_storage = new File($run_folder);
 
-      foreach ($phpized as $dataset) {
-        $response = $client->post($url, [
-          \GuzzleHttp\RequestOptions::JSON => $dataset
-        ]);
-        $this->io()->note("{$dataset->title}: {$response->getStatusCode()}");
-      }
-    }
-    else {
-      $this->io()->error("The file {$dummy_content_file} was not found.");
-    }
+    $harvester = new Harvester($harvest_plan, $item_storage, $hash_storage, $run_storage);
+    $harvester->setLogger(new Stdout(true, "dummy", "run"));
+
+    $results = $harvester->harvest();
+
+    $rows = [];
+    $rows[] = [$results['created'], $results['updated'], $results['skipped']];
+
+
+    $table = new Table(new ConsoleOutput());
+    $table->setHeaders(['created', 'updated', 'skipped'])->setRows($rows);
+    $table->render();
+  }
+
+  /**
+   * Remove dummy content.
+   *
+   * @command dkan-dummy-content:remove
+   */
+  public function remove() {
+    $sourceId = "dummy";
+    $path = \Drupal::service('file_system')->realpath(file_default_scheme() . "://");
+    $hash_folder = "{$path}/dkan_harvest/{$sourceId}-hash";
+    $hash_storage = new File($hash_folder);
+
+    $reverter = new Reverter($sourceId, $hash_storage);
+    $count = $reverter->run();
+
+    $output = new ConsoleOutput();
+    $output->write("{$count} items reverted for the 'dummy' harvest plan.");
   }
 }
 

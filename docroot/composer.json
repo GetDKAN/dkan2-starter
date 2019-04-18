@@ -27,6 +27,8 @@
         "merge-plugin": {
             "include": [
                 "core\/composer.json",
+                "\/var\/www\/src\/make\/composer.json",
+                "\/var\/www\/src\/make\/composer.json",
                 "\/var\/www\/src\/make\/composer.json"
             ],
             "recurse": true,

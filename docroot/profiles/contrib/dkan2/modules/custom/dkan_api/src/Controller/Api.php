@@ -12,11 +12,19 @@ abstract class Api extends ControllerBase {
 
   abstract protected function getStorage();
 
+  public function getAll() {
+    /* @var $engine \Sae\Sae */
+    $engine = $this->getEngine();
+
+    $datasets = $engine->get();
+    $json_string = "[" . implode(",", $datasets) . "]";
+
+    return new JsonResponse(json_decode($json_string), 200, ["Access-Control-Allow-Origin" => "*"]);
+  }
+
   public function get($uuid) {
-
-    $storage = $this->getStorage();
-
-    $engine = new Sae($storage, $this->getJsonSchema());
+    /* @var $engine \Sae\Sae */
+    $engine = $this->getEngine();
 
     try {
       $data = $engine->get($uuid);
@@ -27,30 +35,115 @@ abstract class Api extends ControllerBase {
     }
   }
 
-  public function postAndGetAll() {
+  public function post() {
+    /* @var $engine \Sae\Sae */
+    $engine = $this->getEngine();
+
     /* @var $request \Symfony\Component\HttpFoundation\Request */
     $request = \Drupal::request();
+    $uri = $request->getRequestUri();
+    $data = $request->getContent();
 
-    $method = $request->getMethod();
-
-    $storage = $this->getStorage();
-    $engine = new Sae($storage, $this->getJsonSchema());
-
-    if ($method == "GET") {
-      return new JsonResponse(json_decode($engine->get()), 200, ["Access-Control-Allow-Origin" => "*"]);
-    }
-    elseif ($method == "POST") {
-
-      $data = $request->getContent();
-
-      try {
-        $id = $engine->post($data);
-        $uri = $request->getRequestUri();
-        return new JsonResponse((object)["identifier" => "{$uri}/{$id}"]);
-      } catch (\Exception $e) {
-        return new JsonResponse((object)["message" => $e->getMessage()], 406);
+    // If resource already exists, return HTTP 409 Conflict and existing uri.
+    $params = json_decode($data, TRUE);
+    if (isset($params['identifier'])) {
+      $uuid = $params['identifier'];
+      $existing = \Drupal::entityQuery('node')
+        ->condition('uuid', $uuid)
+        ->execute();
+      if ($existing) {
+        return new JsonResponse(
+          (object) ["endpoint" => "{$uri}/{$uuid}"], 409);
       }
     }
-  }
-}
 
+    try {
+      $uuid = $engine->post($data);
+      return new JsonResponse(
+        (object) ["endpoint" => "{$uri}/{$uuid}", "identifier" => $uuid],
+        201
+      );
+    }
+    catch (\Exception $e) {
+      return new JsonResponse((object) ["message" => $e->getMessage()], 406);
+    }
+  }
+
+  public function put($uuid) {
+    /* @var $engine \Sae\Sae */
+    $engine = $this->getEngine();
+
+    /* @var $request \Symfony\Component\HttpFoundation\Request */
+    $request = \Drupal::request();
+    $data = $request->getContent();
+
+    $obj = json_decode($data);
+    if (isset($obj->identifier) && $obj->identifier != $uuid) {
+      return new JsonResponse((object) ["message" => "Identifier cannot be modified"], 409);
+    }
+
+    $existing = \Drupal::entityQuery('node')
+      ->condition('uuid', $uuid)
+      ->execute();
+
+    try {
+      $engine->put($uuid, $data);
+      $uri = $request->getRequestUri();
+      return new JsonResponse(
+        (object) ["endpoint" => "{$uri}", "identifier" => $uuid],
+        // If a new resource is created, inform the user agent via 201 Created.
+        empty($existing) ? 201 : 200
+      );
+    }
+    catch (\Exception $e) {
+      return new JsonResponse((object) ["message" => $e->getMessage()], 406);
+    }
+  }
+
+  public function patch($uuid) {
+    /* @var $engine \Sae\Sae */
+    $engine = $this->getEngine();
+
+    /* @var $request \Symfony\Component\HttpFoundation\Request */
+    $request = \Drupal::request();
+    $data = $request->getContent();
+
+    $obj = json_decode($data);
+    if (isset($obj->identifier) && $obj->identifier != $uuid) {
+      return new JsonResponse((object) ["message" => "Identifier cannot be modified"], 409);
+    }
+
+    $existing = \Drupal::entityQuery('node')
+      ->condition('uuid', $uuid)
+      ->execute();
+
+    if (!$existing) {
+      return new JsonResponse((object) ["message" => "Resource not found"], 404);
+    }
+
+    try {
+      $engine->patch($uuid, $data);
+      $uri = $request->getRequestUri();
+      return new JsonResponse(
+        (object) ["endpoint" => "{$uri}", "identifier" => $uuid], 200
+      );
+    }
+    catch (\Exception $e) {
+      return new JsonResponse((object) ["message" => $e->getMessage()], 406);
+    }
+  }
+
+  public function delete($uuid) {
+    /* @var $engine \Sae\Sae */
+    $engine = $this->getEngine();
+
+    $engine->delete($uuid);
+    return new JsonResponse((object) ["message" => "Dataset {$uuid} has been deleted."], 200);
+  }
+
+  public function getEngine() {
+    $storage = $this->getStorage();
+    return new Sae($storage, $this->getJsonSchema());
+  }
+
+}

@@ -22,6 +22,11 @@ class GroupConfigTest extends EntityKernelTestBase {
    * Tests that the module's config installs properly.
    */
   public function testConfig() {
+    $this->installEntitySchema('group');
+    $this->installEntitySchema('group_type');
+    $this->installEntitySchema('group_role');
+    $this->installEntitySchema('group_content');
+    $this->installEntitySchema('group_content_type');
     $this->installConfig(['group']);
   }
 

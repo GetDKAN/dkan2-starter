@@ -1,0 +1,24 @@
+{
+    "name": "fmizzell/json-schema-provider",
+    "description": "A simple class that validates and provides JSON schemas.",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "JsonSchemaProvider\\": "src/"
+        }
+    },
+    "require": {
+        "justinrainbow/json-schema": "^5.2",
+        "fmizzell/contracts": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0"
+    },
+    "license": "GPL-3.0-only",
+    "authors": [
+        {
+            "name": "fmizzell",
+            "email": "fmizzell.dev@gmail.com"
+        }
+    ]
+}
