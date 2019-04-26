@@ -1,0 +1,11 @@
+{
+  "identifier": "test",
+  "source": {
+    "type": "\\Harvest\\Extract\\DataJson",
+    "uri": "http://demo.getdkan.com/data.json"
+  },
+  "transforms": [],
+  "load": {
+    "type": "\\Harvest\\Load\\Simple"
+  }
+}

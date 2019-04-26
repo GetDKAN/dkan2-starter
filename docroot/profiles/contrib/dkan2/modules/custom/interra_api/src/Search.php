@@ -2,9 +2,10 @@
 
 namespace Drupal\interra_api;
 
-use Drupal\node\Entity\Node;
+use Drupal\dkan_api\Controller\Dataset;
+use Drupal\interra_api\Controller\ApiController;
 
-class Search extends Load {
+class Search {
 
   public function formatDocs($docs) {
     $index = array();
@@ -13,18 +14,27 @@ class Search extends Load {
     }
     return $index;
   }
-  public function formatSearchDoc($node) {
+  public function formatSearchDoc($value) {
     $formatted = new \stdClass();
-    $value = $node->get('field_json_metadata')->getValue()[0]['value'];
-    $doc = $this->dereference(json_decode($value));
-    $formatted->doc = $doc;
-    $formatted->ref = \Drupal::service('path.alias_manager')->getAliasByPath('/node/'. $node->id());
+    $formatted->doc = $value;
+    $formatted->ref = "";
     return $formatted;
   }
 
   public function index() {
-    $docs = $this->loadDocs();
-    return $this->formatDocs($docs);
+    $datasets = [];
+
+    $dataset_api = new Dataset();
+    $api_engine = $dataset_api->getEngine();
+    $array_of_json_strings = $api_engine->get();
+    $json_string = "[" . implode(",", $array_of_json_strings) . "]";
+    $array = json_decode($json_string);
+
+    foreach ($array as $dataset) {
+      $datasets[] = ApiController::modifyDataset($dataset);
+    }
+
+    return $this->formatDocs($datasets);
   }
 
 }

@@ -41,11 +41,11 @@ abstract class GroupKernelTestBase extends EntityKernelTestBase {
     $this->entityTypeManager = $this->container->get('entity_type.manager');
     $this->pluginManager = $this->container->get('plugin.manager.group_content_enabler');
 
-    $this->installConfig(['group', 'group_test_config']);
     $this->installEntitySchema('group');
     $this->installEntitySchema('group_type');
     $this->installEntitySchema('group_content');
     $this->installEntitySchema('group_content_type');
+    $this->installConfig(['group', 'group_test_config']);
 
     $this->setCurrentUser($this->createUser());
   }

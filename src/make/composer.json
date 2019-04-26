@@ -4,11 +4,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/getdkan/dkan2"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/fmizzell/sae"
+            "url": "https://github.com/fmizzell/json_form"
         },
         {
             "type": "composer",
@@ -16,6 +12,6 @@
         }
     ],
     "require": {
-        "getdkan/dkan2": "dev-development#22b1b0320af23ff690b68bc6acc719980317509e"
+        "getdkan/dkan2": "dev-master"
     }
 }

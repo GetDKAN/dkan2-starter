@@ -87,7 +87,7 @@ class GroupTypeForm extends BundleEntityFormBase {
     ];
 
     $form['title_label'] = [
-      '#title' => t('Title field label'),
+      '#title' => $this->t('Title field label'),
       '#type' => 'textfield',
       '#default_value' => $fields['label']->getLabel(),
       '#description' => $this->t('Sets the label of the field that will be used for group titles.'),
